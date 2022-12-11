@@ -15,7 +15,7 @@ io.on('connection', (socket)=>{
         io.emit('server-message', ms);
     })
 });
-
+const PORT = process.env.PORT || 3000
 server.listen(3000, () => {
-  console.log('listening on *:3000');
+  console.log('listening on *:'+PORT);
 });
