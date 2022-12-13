@@ -16,10 +16,11 @@ app.get('/api/members', (req,res)=>{
   if(req.query.setmember != null){
   switch(req.query.setmember){
     case "tesla":
-      fs.readFile('./members.json')
+      fs.readFile('members.json')
       .then(body=> JSON.parse(body))
       .then(json=>{
         json.tesla = "true"
+        return json;
       })
       .then(json => JSON.stringify(json))
       .then(body => fs.writeFile(fn, body))
