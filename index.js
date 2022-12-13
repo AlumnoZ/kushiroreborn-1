@@ -4,7 +4,6 @@ const { Server } = require('socket.io')
 const fs = require('fs')
 const http = require('http');
 const server = http.createServer(app);
-const members = require('./members.json')
 app.use(express.json())
 const io = new Server(server);
 app.get('/', (req, res) => {
@@ -12,36 +11,55 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/members', (req,res)=>{
-
-  if(req.query.setmember != null){
+  let members = null;
   switch(req.query.setmember){
     case "tesla":
-      fs.readFile('members.json')
-      .then(body=> JSON.parse(body))
-      .then(json=>{
-        json.tesla = "true"
-        return json;
-      })
-      .then(json => JSON.stringify(json))
-      .then(body => fs.writeFile(fn, body))
-      .catch(error => console.warn(error))
+      members = JSON.parse(fs.readFileSync('members.json', 'utf-8'))
+      members.tesla = "true"
+      fs.writeFileSync('members.json',JSON.stringify(members,null,2))
+      res.sendFile(__dirname+"/members.json")
       break;
     case "curie":
+      members = JSON.parse(fs.readFileSync('members.json', 'utf-8'))
+      members.curie = "true"
+      fs.writeFileSync('members.json',JSON.stringify(members,null,2))
+      res.sendFile(__dirname+"/members.json")
       break;
     case "einstein":
+       members = JSON.parse(fs.readFileSync('members.json', 'utf-8'))
+      members.einstein = "true"
+      fs.writeFileSync('members.json',JSON.stringify(members,null,2))
+      res.sendFile(__dirname+"/members.json")
       break;
     case "freud":
+       members = JSON.parse(fs.readFileSync('members.json', 'utf-8'))
+      members.freud = "true"
+      fs.writeFileSync('members.json',JSON.stringify(members,null,2))
+      res.sendFile(__dirname+"/members.json")
       break;
     case "darwin":
+       members = JSON.parse(fs.readFileSync('members.json', 'utf-8'))
+      members.darwin = "true"
+      fs.writeFileSync('members.json',JSON.stringify(members,null,2))
+      res.sendFile(__dirname+"/members.json")
       break;
     case "lovelace":
+       members = JSON.parse(fs.readFileSync('members.json', 'utf-8'))
+      members.lovelace = "true"
+      fs.writeFileSync('members.json',JSON.stringify(members,null,2))
+      res.sendFile(__dirname+"/members.json")
       break;
     case "asimov":
+       members = JSON.parse(fs.readFileSync('members.json', 'utf-8'))
+      members.asimov = "true"
+      fs.writeFileSync('members.json',JSON.stringify(members,null,2))
+      res.sendFile(__dirname+"/members.json")
       break;      
+     default:
+      res.sendFile(__dirname+"/members.json")
+      break; 
+  
   }
-  }
-
-  res.sendFile(__dirname+"/members.json")
 })
 
 io.on('connection', (socket)=>{
