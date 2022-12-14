@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/download', (req,res)=>{
-  res.download(__dirname+"QuantumEdens.jar")
+  res.download(__dirname+"/QuantumEdens.jar")
 })
 
 app.get('/api/members', (req,res)=>{
