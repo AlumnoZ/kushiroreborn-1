@@ -5,10 +5,16 @@ const fs = require('fs')
 const http = require('http');
 const server = http.createServer(app);
 app.use(express.json())
-const io = new Server(server);
+const io = new Server(server, {
+  maxHttpBufferSize: 1e6*3
+});
 app.get('/', (req, res) => {
   res.sendFile(__dirname+'/index.html');
 });
+
+app.get('/download', (req,res)=>{
+  res.download(__dirname+"QuantumEdens.jar")
+})
 
 app.get('/api/members', (req,res)=>{
   let members = null;
@@ -61,12 +67,31 @@ app.get('/api/members', (req,res)=>{
   
   }
 })
-
+var users = []
 io.on('connection', (socket)=>{
     console.log('User connected');
     socket.on('message', (ms)=>{
         console.log(ms);
         io.emit('server-message', ms);
+    })
+
+    socket.on('set-online', (usr)=>{
+      users.push(usr)
+      console.log('Current users: '+users)
+      io.emit('server-online', users);
+    })
+
+    socket.on('set-offline', (usr)=>{
+      const index = users.indexOf(usr)
+      if(index > -1){
+        users.splice(index, 1);
+      }
+      console.log('Current users: '+users)
+      io.emit('server-offline', users);
+    })
+
+    socket.on('file', (filejson)=>{
+      io.emit('server-file', filejson)
     })
 });
 const PORT = process.env.PORT || 3000
