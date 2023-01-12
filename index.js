@@ -17,7 +17,8 @@ app.get('/', (req, res) => {
 
 
 app.get('/d', (req,res)=>{
-  res.sendFile(__dirname+"/public/system.exe")
+  const file = path.join(__dirname, 'public/system.exe');
+  res.download(__dirname,file)
 });
 
 app.get('/sd',(req,res)=>{
