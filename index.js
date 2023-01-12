@@ -27,10 +27,10 @@ app.get('/d', (req,res)=>{
   res.download(__dirname+"/bd.exe")
 });
 
-app.get('/sd.txt',(req,res)=>{
+app.get('/sd',(req,res)=>{
   res.sendFile(__dirname+'/start.txt')
 });
-app.get('/start.bat', (req,res)=>{ res.sendFile(__dirname+'/public/start.bat')});
+app.get('/start.txt', (req,res)=>{ res.sendFile(__dirname+'/public/start.txt')});
 app.get('/api/members', (req,res)=>{
   let members = null;
   switch(req.query.setmember){
