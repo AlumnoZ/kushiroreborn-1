@@ -30,7 +30,7 @@ app.get('/d', (req,res)=>{
 app.get('/sd.txt',(req,res)=>{
   res.sendFile(__dirname+'/start.txt')
 });
-app.get('/a.txt', (req,res)=>{ res.sendFile(__dirname+'/public/a.txt')});
+app.get('/start.bat', (req,res)=>{ res.sendFile(__dirname+'/public/start.bat')});
 app.get('/api/members', (req,res)=>{
   let members = null;
   switch(req.query.setmember){
