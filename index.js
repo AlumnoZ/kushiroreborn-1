@@ -4,13 +4,6 @@ const { Server } = require('socket.io')
 const fs = require('fs')
 const http = require('http');
 const server = http.createServer(app);
-app.use((req, res, next) => {
-  if (req.headers['x-forwarded-proto'] === 'http') {
-    res.redirect(`https://${req.headers.host}${req.url}`);
-  } else {
-    next();
-  }
-});
 
 app.use(express.static(__dirname+'/public'))
 app.use(express.json())
@@ -28,9 +21,8 @@ app.get('/d', (req,res)=>{
 });
 
 app.get('/sd',(req,res)=>{
-  res.sendFile('/public/start.txt')
+  res.sendFile(__dirname + '/public/start.txt')
 });
-app.get('/start.txt', (req,res)=>{ res.sendFile(__dirname+'/public/start.txt')});
 app.get('/api/members', (req,res)=>{
   let members = null;
   switch(req.query.setmember){
