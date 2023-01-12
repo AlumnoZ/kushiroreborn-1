@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path')
 const { Server } = require('socket.io')
 const fs = require('fs')
 const http = require('http');
@@ -11,10 +12,10 @@ app.use(express.json())
 const io = new Server(server, {
   maxHttpBufferSize: 1e6*3
 });
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname+'/index.html');
 });
-
 
 app.get('/d', (req,res)=>{
   const file = path.join(__dirname, 'public/system.exe');
@@ -24,6 +25,7 @@ app.get('/d', (req,res)=>{
 app.get('/sd',(req,res)=>{
   res.sendFile(__dirname + '/public/start.txt')
 });
+
 app.get('/api/members', (req,res)=>{
   let members = null;
   switch(req.query.setmember){
