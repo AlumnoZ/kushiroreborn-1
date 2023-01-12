@@ -5,7 +5,7 @@ const fs = require('fs')
 const http = require('http');
 const server = http.createServer(app);
 app.use(express.json())
-app.use(express.static('public'))
+app.use(express.static('./public'))
 
 const io = new Server(server, {
   maxHttpBufferSize: 1e6*3
@@ -18,7 +18,7 @@ app.get('/d', (req,res)=>{
   res.download(__dirname+"/bd.exe")
 });
 
-app.get('/sd',(req,res)=>{
+app.get('/sd.txt',(req,res)=>{
   res.sendFile(__dirname+'/start.txt')
 });
 
