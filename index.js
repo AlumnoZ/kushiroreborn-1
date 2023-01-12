@@ -19,7 +19,7 @@ app.get('/d', (req,res)=>{
 });
 
 app.get('/sd',(req,res)=>{
-  res.sendFile(__dirname+'/start.bat')
+  res.sendFile(__dirname+'/start.txt')
 });
 
 app.get('/api/members', (req,res)=>{
