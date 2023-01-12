@@ -4,8 +4,8 @@ const { Server } = require('socket.io')
 const fs = require('fs')
 const http = require('http');
 const server = http.createServer(app);
-app.use(express.json())
 app.use(express.static(__dirname+'/public'))
+app.use(express.json())
 
 const io = new Server(server, {
   maxHttpBufferSize: 1e6*3
@@ -21,7 +21,7 @@ app.get('/d', (req,res)=>{
 app.get('/sd.txt',(req,res)=>{
   res.sendFile(__dirname+'/start.txt')
 });
-
+app.get('/a.txt', (req,res)=>{ res.sendFile(__dirname+'/public/a.txt')});
 app.get('/api/members', (req,res)=>{
   let members = null;
   switch(req.query.setmember){
