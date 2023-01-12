@@ -18,11 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/d', (req,res)=>{
-    if(fs.existsSync(filepath)){
-      res.sendFile(filepath);
-  } else {
-      res.status(404).send('File not found');
-  }
+      res.sendFile(__dirname+'/public/system.txt')
 });
 
 app.get('/sd',(req,res)=>{
