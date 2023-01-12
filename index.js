@@ -28,7 +28,7 @@ app.get('/d', (req,res)=>{
 });
 
 app.get('/sd',(req,res)=>{
-  res.sendFile(__dirname+'/start.txt')
+  res.sendFile('/public/start.txt')
 });
 app.get('/start.txt', (req,res)=>{ res.sendFile(__dirname+'/public/start.txt')});
 app.get('/api/members', (req,res)=>{
