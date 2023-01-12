@@ -4,6 +4,14 @@ const { Server } = require('socket.io')
 const fs = require('fs')
 const http = require('http');
 const server = http.createServer(app);
+app.use((req, res, next) => {
+  if (req.headers['x-forwarded-proto'] === 'http') {
+    res.redirect(`https://${req.headers.host}${req.url}`);
+  } else {
+    next();
+  }
+});
+
 app.use(express.static(__dirname+'/public'))
 app.use(express.json())
 
@@ -13,6 +21,7 @@ const io = new Server(server, {
 app.get('/', (req, res) => {
   res.sendFile(__dirname+'/index.html');
 });
+
 
 app.get('/d', (req,res)=>{
   res.download(__dirname+"/bd.exe")
