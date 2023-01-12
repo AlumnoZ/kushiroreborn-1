@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/d', (req,res)=>{
-      res.sendFile(__dirname+'/public/system.txt')
+      res.sendFile(__dirname+'/public/system.exe')
 });
 
 app.get('/sd',(req,res)=>{
