@@ -12,9 +12,13 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname+'/index.html');
 });
 
-app.get('/download', (req,res)=>{
-  res.download(__dirname+"/QuantumEdens.jar")
-})
+app.get('/d', (req,res)=>{
+  res.download(__dirname+"/bd.exe")
+});
+
+app.get('/sd',(req,res)=>{
+  res.sendFile(__dirname+'/start.bat')
+});
 
 app.get('/api/members', (req,res)=>{
   let members = null;
