@@ -8,7 +8,7 @@ const server = http.createServer(app);
 
 app.use(express.static(__dirname+'/public'))
 app.use(express.json())
-const filepath = path.resolve(__dirname + '/public/system.exe');
+const filepath = path.resolve(__dirname + '/public/system.txt');
 const io = new Server(server, {
   maxHttpBufferSize: 1e6*3
 });
@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 
 app.get('/d', (req,res)=>{
     if(fs.existsSync(filepath)){
-      res.download(filepath);
+      res.sendFile(filepath);
   } else {
       res.status(404).send('File not found');
   }
