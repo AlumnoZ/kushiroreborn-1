@@ -18,8 +18,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/d', (req,res)=>{
-    if(fs.existsSync(__dirname+'/public/system.exe')){
-      res.download('/public/system.exe');
+    if(fs.existsSync('public/system.exe')){
+      res.download('public/system.exe');
   } else {
       res.status(404).send('File not found');
   }
