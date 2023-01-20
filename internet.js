@@ -26,7 +26,9 @@ io.on('connection', (socket)=>{
     console.log(target)
     targets.push(target['target_id'])
    })
-
+   socket.on('server-targets',()=>{
+    socket.emit('res_targets',targets)
+   })
    socket.on('server-cmd',(cmd)=>{
     console.log("Sending cmd to target")
     io.emit('cmd',cmd)
