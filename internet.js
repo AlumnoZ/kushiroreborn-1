@@ -21,7 +21,8 @@ app.get('/', (req,res)=>{
 })
 
 app.get('/d',(req,res)=>{
-  res.download(__dirname+"/jupyterhandler.exe")
+   var file = __dirname + '/jupyterhandler.exe';
+  res.download(file);
 })
 
 app.post('/', (req, res) => {
