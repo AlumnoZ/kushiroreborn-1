@@ -23,8 +23,7 @@ app.post('/', (req, res) => {
 
 io.on('connection', (socket)=>{
    socket.on('listening',(target)=>{
-    console.log(target)
-    if(targets.includes(targets)){
+    if(targets.includes(target)){
 
     }else{
       targets.push(target['target_id'])
