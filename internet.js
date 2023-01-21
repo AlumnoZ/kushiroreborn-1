@@ -8,6 +8,8 @@ const server = http.createServer(app);
 const { Server } = require('socket.io')
 const io = new Server(server);
 var targets = []
+var pongReceived = false;
+
 
 function removeDuplicates(arr) {
   return arr.filter((item,
@@ -38,18 +40,18 @@ io.on('connection', (socket)=>{
       targets = removeDuplicates(targets)
     };
    })
+   socket.on('pong', (data) => {
+    console.log('ponged'+data)
+    if(data.target_id === targets[i]) {
+        pongReceived = true;
+    }
+   });
    socket.on('server-targets', async () => {
     var filteredTargets = [];
     for(let i = 0; i < targets.length; i++) {
         try {
-            var pongReceived = false;
             io.emit('ping', {'target_id': targets[i]});
-            socket.on('pong', (data) => {
-                console.log('pong')
-                if(data.target_id === targets[i]) {
-                    pongReceived = true;
-                }
-            });
+
             await new Promise((resolve, reject) => {
                 setTimeout(() => {
                     if(pongReceived) {
