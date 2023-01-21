@@ -41,6 +41,11 @@ io.on('connection', (socket)=>{
     }
    })
 
+   socket.on('disconnect',()=>{
+    targets.length = 0
+    socket.emit('res_targets',targets)
+   })
+
   socket.on('server-cmd_res',(cmd_res)=>{
         cmd_res_mod = JSON.parse(cmd_res)
         cmd_res_mod.targets = targets
