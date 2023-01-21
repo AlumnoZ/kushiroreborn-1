@@ -9,7 +9,7 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require('socket.io')
 const io = new Server(server);
-const targets = []
+var targets = []
 
 function removeDuplicates(arr) {
   return arr.filter((item,
