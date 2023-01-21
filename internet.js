@@ -34,7 +34,7 @@ io.on('connection', (socket)=>{
     if(targets.includes(target)){
     }else{
       for(tar in targets){
-        socket.timeout(5000).emit(JSON.parse({"cmd":"echo ping", "target":tar}), (err,response)=>{
+        socket.timeout(3000).emit(JSON.parse({"cmd":"echo ping", "target":tar}), (err,response)=>{
           if(err){
   
           }else{
@@ -44,6 +44,7 @@ io.on('connection', (socket)=>{
         })
       }
     };
+    console.log("Current targets: "+targets)
 
    })
    socket.on('server-targets',()=>{
