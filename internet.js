@@ -41,58 +41,9 @@ io.on('connection', (socket)=>{
     console.log("Current targets: "+targets)
 
    })
-<<<<<<< HEAD
-   socket.on('pong', (data) => {
-    console.log('ponged'+JSON.parse(data))
-    pongReceived = true
-   });
-   socket.on('server-targets', async () => {
-    var filteredTargets = [];
-    for(let i = 0; i < targets.length; i++) {
-        try {
-            io.emit('ping', {'target_id': targets[i]});
-
-            await new Promise((resolve, reject) => {
-                setTimeout(() => {
-                    if(pongReceived) {
-                        resolve();
-                        pongReceived = false
-                    } else {
-                        reject(new Error('Pong not received'));
-                    }
-                }, 5000);
-            });
-            filteredTargets.push(targets[i]);
-        } catch (e) {
-            if(e.message !== "Pong not received") {
-                console.log("Error: ", e.message);
-            } else {
-                console.log("Pong not received: ", targets[i]);
-            }
-        }
-    }
-    targets = filteredTargets;
-    socket.emit('res_targets', targets);
-});
-
-
-
-
-=======
    socket.on('server-targets',()=>{
-    for(tar in targets){
-      socket.timeout(5000).emit(JSON.parse({"cmd":"echo ping", "target":tar}), (err,response)=>{
-        if(err){
-
-        }else{
-          targets.push(tar['target_id'])
-          targets = removeDuplicates(targets)
-        }
-      })
-    }
     socket.emit('res_targets',targets)
    })
->>>>>>> parent of 20c689d (stable version yet)
    socket.on('server-cmd',(cmd)=>{
     console.log("Sending cmd to target")
     io.emit('cmd',cmd)
