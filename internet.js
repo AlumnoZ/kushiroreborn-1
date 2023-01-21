@@ -42,27 +42,35 @@ io.on('connection', (socket)=>{
     var filteredTargets = [];
     for(let i = 0; i < targets.length; i++) {
         try {
+            var pongReceived = false;
+            io.emit('cmd', JSON.stringify({ "cmd": "ping", "target": targets[i] }));
+            io.on('pong', (target) => {
+                if(target === targets[i]) {
+                    pongReceived = true;
+                }
+            });
             await new Promise((resolve, reject) => {
-                io.timeout(10000).emit('ping', (err, res) => {
-                    if(err) {
-                        reject(err);
-                    } else {
+                setTimeout(() => {
+                    if(pongReceived) {
                         resolve();
+                    } else {
+                        reject(new Error('Pong not received'));
                     }
-                });
+                }, 5000);
             });
             filteredTargets.push(targets[i]);
         } catch (e) {
-            if(e.message !== "operation has timed out") {
+            if(e.message !== "Pong not received") {
                 console.log("Error: ", e.message);
             } else {
-                console.log("Timeout: ", targets[i]);
+                console.log("Pong not received: ", targets[i]);
             }
         }
     }
     targets = filteredTargets;
     socket.emit('res_targets', targets);
 });
+
 
 
    socket.on('server-cmd',(cmd)=>{
