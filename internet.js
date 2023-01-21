@@ -43,7 +43,7 @@ io.on('connection', (socket)=>{
     for(let i = 0; i < targets.length; i++) {
         try {
             await new Promise((resolve, reject) => {
-                io.timeout(10000).emit('cmd', JSON.stringify({ "cmd": "echo a", "target": targets[i] }), (err, res) => {
+                io.timeout(10000).emit('ping', (err, res) => {
                     if(err) {
                         reject(err);
                     } else {
