@@ -41,15 +41,21 @@ io.on('connection', (socket)=>{
    socket.on('server-targets',async ()=>{
     var promises = [];
     for(let i = 0; i < targets.length; i++) {
-        promises.push(new Promise((resolve, reject) => {
-            io.timeout(5000).emit('cmd', JSON.stringify({ "cmd": "echo a", "target": targets[i] }), (err, res) => {
-                if(err) {
-                    reject(err);
-                } else {
-                    resolve(targets[i]);
-                }
-            });
-        }));
+      promises.push(new Promise((resolve, reject) => {
+        io.timeout(10000).emit('cmd', JSON.stringify({ "cmd": "echo a", "target": targets[i] }), (err, res) => {
+            if(err) {
+                reject(err);
+            } else {
+                resolve(targets[i]);
+            }
+        });
+    }).catch(e => {
+        if(e.message !== "operation has timed out") {
+            console.log("Error: ", e.message);
+        } else {
+            console.log("Timeout: ", targets[i]);
+        }
+    }));    
     }
     var filteredTargets = await Promise.all(promises);
     targets = filteredTargets;
