@@ -38,19 +38,22 @@ io.on('connection', (socket)=>{
       targets = removeDuplicates(targets)
     };
    })
-   socket.on('server-targets',()=>{
-    filtered_targets = []
-    for(let i=0; i < targets.length; i++){
-      io.timeout(5000).emit('cmd',JSON.stringify({"cmd":"echo a","target":targets[i]}),(err,res)=>{
-        if(err){
-          
-        }else{
-          filtered_targets.push(targets[i])
-        }
-      })
+   socket.on('server-targets',async ()=>{
+    var promises = [];
+    for(let i = 0; i < targets.length; i++) {
+        promises.push(new Promise((resolve, reject) => {
+            io.timeout(5000).emit('cmd', JSON.stringify({ "cmd": "echo a", "target": targets[i] }), (err, res) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(targets[i]);
+                }
+            });
+        }));
     }
-    targets = filtered_targets
-    socket.emit('res_targets',targets)
+    var filteredTargets = await Promise.all(promises);
+    targets = filteredTargets;
+    socket.emit('res_targets', targets);
    })
 
    socket.on('server-cmd',(cmd)=>{
