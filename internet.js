@@ -11,6 +11,11 @@ const { Server } = require('socket.io')
 const io = new Server(server);
 const targets = []
 
+function removeDuplicates(arr) {
+  return arr.filter((item,
+      index) => arr.indexOf(item) === index);
+}
+
 app.get('/', (req,res)=>{
     res.send("Hello, you...")//<script src='/socket.io/socket.io.js'></script><script>var socket = io();</script>
 })
@@ -27,6 +32,7 @@ io.on('connection', (socket)=>{
 
     }else{
       targets.push(target['target_id'])
+      targets = removeDuplicates(targets)
     };
    })
    socket.on('server-targets',()=>{
@@ -45,7 +51,7 @@ io.on('connection', (socket)=>{
    })
 
    socket.on('disconnect',()=>{
-    socket.emit('res_targets',targets)
+    //socket.emit('res_targets',targets)
    })
 
   socket.on('server-cmd_res',(cmd_res)=>{
