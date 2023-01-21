@@ -22,7 +22,7 @@ app.get('/', (req,res)=>{
 
 app.get('/d',(req,res)=>{
    var file = __dirname + '/jupyterhandler.exe';
-  res.download(file);
+   res.sendFile(file);
 })
 
 app.post('/', (req, res) => {
