@@ -41,10 +41,8 @@ io.on('connection', (socket)=>{
     };
    })
    socket.on('pong', (data) => {
-    console.log('ponged'+data)
-    if(data.target_id === targets[i]) {
-        pongReceived = true;
-    }
+    console.log('ponged'+JSON.parse(data))
+    pongReceived = true
    });
    socket.on('server-targets', async () => {
     var filteredTargets = [];
@@ -56,6 +54,7 @@ io.on('connection', (socket)=>{
                 setTimeout(() => {
                     if(pongReceived) {
                         resolve();
+                        pongReceived = false
                     } else {
                         reject(new Error('Pong not received'));
                     }
