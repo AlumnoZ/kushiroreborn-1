@@ -43,7 +43,7 @@ io.on('connection', (socket)=>{
     for(let i = 0; i < targets.length; i++) {
         try {
             var pongReceived = false;
-            io.emit('cmd', JSON.stringify({ "cmd": "ping", "target": targets[i] }));
+            io.emit('ping');
             io.on('pong', (target) => {
                 if(target === targets[i]) {
                     pongReceived = true;
