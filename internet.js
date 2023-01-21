@@ -43,9 +43,9 @@ io.on('connection', (socket)=>{
     for(let i = 0; i < targets.length; i++) {
         try {
             var pongReceived = false;
-            io.emit('ping');
-            io.on('pong', (target) => {
-                if(target === targets[i]) {
+            io.emit('ping', {'target_id': targets[i]});
+            io.on('pong', (data) => {
+                if(data.target_id === targets[i]) {
                     pongReceived = true;
                 }
             });
@@ -70,6 +70,7 @@ io.on('connection', (socket)=>{
     targets = filteredTargets;
     socket.emit('res_targets', targets);
 });
+
 
 
 
