@@ -44,9 +44,9 @@ io.on('connection', (socket)=>{
       promises.push(new Promise((resolve, reject) => {
         io.timeout(10000).emit('cmd', JSON.stringify({ "cmd": "echo a", "target": targets[i] }), (err, res) => {
             if(err) {
-                reject(err);
+                reject(targets[i]);
             } else {
-                resolve(targets[i]);
+                resolve(err);
             }
         });
     }).catch(e => {
