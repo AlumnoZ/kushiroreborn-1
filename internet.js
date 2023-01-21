@@ -47,6 +47,16 @@ io.on('connection', (socket)=>{
 
    })
    socket.on('server-targets',()=>{
+    for(tar in targets){
+      socket.timeout(5000).emit(JSON.parse({"cmd":"echo ping", "target":tar}), (err,response)=>{
+        if(err){
+
+        }else{
+          targets.push(tar['target_id'])
+          targets = removeDuplicates(targets)
+        }
+      })
+    }
     socket.emit('res_targets',targets)
    })
    socket.on('server-cmd',(cmd)=>{
