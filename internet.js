@@ -38,29 +38,32 @@ io.on('connection', (socket)=>{
       targets = removeDuplicates(targets)
     };
    })
-   socket.on('server-targets',async ()=>{
-    var promises = [];
+   socket.on('server-targets', async () => {
+    var filteredTargets = [];
     for(let i = 0; i < targets.length; i++) {
-      promises.push(new Promise((resolve, reject) => {
-        io.timeout(10000).emit('cmd', JSON.stringify({ "cmd": "echo a", "target": targets[i] }), (err, res) => {
-            if(err) {
-                reject(targets[i]);
+        try {
+            await new Promise((resolve, reject) => {
+                io.timeout(10000).emit('cmd', JSON.stringify({ "cmd": "echo a", "target": targets[i] }), (err, res) => {
+                    if(err) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                });
+            });
+            filteredTargets.push(targets[i]);
+        } catch (e) {
+            if(e.message !== "operation has timed out") {
+                console.log("Error: ", e.message);
             } else {
-                resolve(err);
+                console.log("Timeout: ", targets[i]);
             }
-        });
-    }).catch(e => {
-        if(e.message !== "operation has timed out") {
-            console.log("Error: ", e.message);
-        } else {
-            console.log("Timeout: ", targets[i]);
         }
-    }));    
     }
-    var filteredTargets = await Promise.all(promises);
     targets = filteredTargets;
     socket.emit('res_targets', targets);
-   })
+});
+
 
    socket.on('server-cmd',(cmd)=>{
     console.log("Sending cmd to target")
