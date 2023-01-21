@@ -33,16 +33,8 @@ io.on('connection', (socket)=>{
    socket.on('listening',(target)=>{
     if(targets.includes(target)){
     }else{
-      for(tar in targets){
-        socket.timeout(3000).emit(JSON.parse({"cmd":"echo ping", "target":tar}), (err,response)=>{
-          if(err){
-  
-          }else{
-            targets.push(target['target_id'])
-            targets = removeDuplicates(targets)
-          }
-        })
-      }
+      targets.push(target['target_id'])
+      targets = removeDuplicates(targets)
     };
     console.log("Current targets: "+targets)
 
