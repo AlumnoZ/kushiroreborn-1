@@ -41,9 +41,11 @@ io.on('connection', (socket)=>{
     }
    })
 
-   socket.on('server-cmd_res',(cmd_res)=>{
-        io.emit('cmd_res',cmd_res)
-   })
+  socket.on('server-cmd_res',(cmd_res)=>{
+        cmd_res_mod = JSON.parse(cmd_res)
+        cmd_res_mod.targets = targets
+        io.emit('cmd_res',JSON.stringify(cmd_res_mod))
+  })
 })
 
 const PORT = process.env.PORT || 3000
