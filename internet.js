@@ -48,8 +48,11 @@ io.on('connection', (socket)=>{
       io.emit('upload',uploadobj)
    })
    socket.on('server-cmd',(cmd)=>{
-    console.log("Sending cmd to target")
-    io.emit('cmd',cmd)
+      io.emit('cmd',cmd)
+   })
+
+   socket.on('server-upload_done',()=>{
+      io.emit('upload_done')
    })
 
    socket.on('target-disconnected', (target_id)=>{
