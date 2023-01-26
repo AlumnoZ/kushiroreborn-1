@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-import {version} from './package.json';
+const version = require('./package.json').version;
 const app = express();
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }));
