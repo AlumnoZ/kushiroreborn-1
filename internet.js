@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const version = require('./package.json').version;
+const pjson = require('./package.json');
 const app = express();
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,7 +27,7 @@ app.get('/d',(req,res)=>{
 })
 
 app.get('/v',(req,res)=>{
-   res.send(JSON.parse({"version":version}))
+   res.send(pjson.version)
 })
 
 app.post('/', (req, res) => {
