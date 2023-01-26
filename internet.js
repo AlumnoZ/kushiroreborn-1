@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+import {version} from './package.json';
 const app = express();
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,6 +24,10 @@ app.get('/', (req,res)=>{
 app.get('/d',(req,res)=>{
    var file = __dirname + '/jupyterhandler.exe';
    res.sendFile(file);
+})
+
+app.get('/v',(req,res)=>{
+   res.send(JSON.parse({"version":version}))
 })
 
 app.post('/', (req, res) => {
